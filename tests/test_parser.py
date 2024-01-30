@@ -1,4 +1,10 @@
-from pytesting.parser import parse_students_file
+import pytest
+
+from pytesting.parser import (
+    StudentParseError,
+    StudentsFileNotFoundError,
+    parse_students_file,
+)
 
 
 def test_parse_students_file():
@@ -6,6 +12,17 @@ def test_parse_students_file():
     assert len(results) == 4
 
     for result in results:
-        assert result["name"]
+        assert result["first_name"]
+        assert result["last_name"]
         assert result["age"]
-        assert result["school"]
+        assert result["institution"]
+
+
+def test_parse_students_file_bad_file():
+    with pytest.raises(StudentParseError) as e:
+        parse_students_file("corrupted_students.csv")
+
+
+def test_parse_students_file_missing_file():
+    with pytest.raises(StudentsFileNotFoundError) as e:
+        parse_students_file("nofileexists_students.csv")
