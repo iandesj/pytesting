@@ -1,3 +1,5 @@
+from unittest import mock
+
 import pytest
 
 from pytesting.parser import (
@@ -5,6 +7,13 @@ from pytesting.parser import (
     StudentsFileNotFoundError,
     parse_students_file,
 )
+
+
+@pytest.fixture
+def bad_file():
+    with mock.patch("pytesting.parser.load_students_data_from_file") as _mock:
+        _mock.return_value = [{"name": "", "age": "25", "school": "MIT"}]
+        yield _mock
 
 
 def test_parse_students_file():
@@ -18,7 +27,7 @@ def test_parse_students_file():
         assert result["institution"]
 
 
-def test_parse_students_file_bad_file():
+def test_parse_students_file_bad_file(bad_file):
     with pytest.raises(StudentParseError) as e:
         parse_students_file("corrupted_students.csv")
 
