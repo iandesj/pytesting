@@ -28,3 +28,6 @@ Project with a few examples of unit testing
 8. checkout `six` branch
    - Example: multiple passing tests, using fixtures
    - Lesson: Using fixtures in tests to mock loading file data
+9. checkout `seven` branch
+   - Example: multiple passing tests, streamlit tests
+   - Lesson: Using pytest to test Streamlit app code
